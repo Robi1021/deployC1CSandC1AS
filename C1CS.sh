@@ -79,7 +79,7 @@ EOF
 ## Default value: (none)
 activationCode: '${DSSC_AC}'  
 #update 202111xx will change to deploying C1CSkey
-# C1CSSCANNERAPIKEY from https://container.REGION.cloudone.trendmicro.com/api/scanners`
+# C1CSSCANNERAPIKEY from https://container.REGION.cloudone.trendmicro.com/api/scanners
 #cloudOne:
 #  apiKey: ${C1CSSCANNERAPIKEY}
 #  endpoint: https://container.REGION.cloudone.trendmicro.com
