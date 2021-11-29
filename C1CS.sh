@@ -149,7 +149,7 @@ EOF
   [[ "${PLATFORM}" == "AZURE" ]] &&  export DSSC_HOST=${DSSC_HOST_RAW//./-}.nip.io
   [[ "${PLATFORM}" == "AWS" ]]  && export DSSC_HOST=${DSSC_HOST_RAW}
   [ ${VERBOSE} -eq 1 ] && printf "\n%s\n" "DSSC_HOST=${DSSC_HOST}"
-  printf '\n%s' "Waiting for SmartCheck Service to come online: ."
+  printf '\n%s' "Waiting for SmartCheck Service to come online:"
   export DSSC_BEARERTOKEN=''
   while [[ "$DSSC_BEARERTOKEN" == '' ]];do
     sleep 5
