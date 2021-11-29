@@ -154,7 +154,7 @@ EOF
   while [[ "$DSSC_BEARERTOKEN" == '' ]];do
     sleep 5
     export DSSC_BEARERTOKEN_RAW=`curl -s -k -X POST https://${DSSC_HOST}/api/sessions -H "Content-Type: application/json"  -H "Api-Version: 2018-05-01" -H "cache-control: no-cache" -d "{\"user\":{\"userid\":\"${DSSC_USERNAME}\",\"password\":\"${DSSC_TEMPPW}\"}}" 2>/dev/null `
-    export DSSC_BEARERTOKEN=`echo ${DSSC_BEARERTOKEN_RAW} | jq -r '.token'`
+    export DSSC_BEARERTOKEN=`echo ${DSSC_BEARERTOKEN_RAW} | jq -r '.token' 2>/dev/`
         printf '%s' "."
   done
  printf '\n' 
