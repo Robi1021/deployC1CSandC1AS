@@ -183,24 +183,17 @@ printf '%s\n' "--------------------------"
 printf '%s\n' "     (re-)Adding C1CS     "
 printf '%s\n' "--------------------------"
 
-#delete old namespaces  
-printf '%s\n' "Deleting any potential old C1CS artefacts on the EKS cluster"
+
+#delete old C1CS if present  
+if [[ "`helm list -n trendmicro-system -o json | jq -r '.[].name'`" =~ 'trendmicro' ]]; then
+  printf '%s\n' "Deleting old C1CS deployment"
+  helm delete trendmicro -n trendmicro-system
+fi
 #kubectl delete namespace c1cs  &>/dev/null
+printf '%s\n' "Deleting old namespaces on the EKS cluster"
 kubectl delete namespace trendmicro-system   2>/dev/null
-kubectl delete clusterrole oversight-manager-role 2>/dev/null 
-kubectl delete ClusterRoleBinding "oversight-manager-rolebinding"  2>/dev/null 
-
-kubectl delete clusterrole oversight-proxy-role 2>/dev/null 
-kubectl delete ClusterRoleBinding "oversight-proxy-rolebinding"  2>/dev/null 
-
 kubectl delete namespace nginx  2>/dev/null
-kubectl delete clusterrole usage-manager-role 2>/dev/null
-kubectl delete clusterroleBinding "usage-manager-rolebinding" 2>/dev/null
-
 kubectl delete namespace mywhitelistednamespace 2>/dev/null
-kubectl delete clusterrole usage-proxy-role 2>/dev/null
-kubectl delete ClusterRoleBinding "usage-proxy-rolebinding"  2>/dev/null
-
 
 # if a cluster object for this project already exists in c1cs, then delete it 
 C1CSCLUSTERS=(`\
