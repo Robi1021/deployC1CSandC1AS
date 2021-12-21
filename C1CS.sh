@@ -62,8 +62,10 @@ EOF
   fi
   
   printf '%s' "Creating certificate for loadballancer...  "
-  openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout ${WORKDIR}/k8s.key -out ${WORKDIR}/k8s.crt -subj "/CN=${DSSC_SUBJECTALTNAME}" -extensions san -config ${WORKDIR}/req.conf
-  
+  [[ "${PLATFORM}" == "AZURE" ]] || [[ "${PLATFORM}" == "AWS" ]] && openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout ${WORKDIR}/k8s.key -out ${WORKDIR}/k8s.crt -subj "/CN=${DSSC_SUBJECTALTNAME}" -extensions san -config ${WORKDIR}/req.conf
+  [[ "${PLATFORM}" == "GCP" ]] && openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout ${WORKDIR}/k8s.key -out ${WORKDIR}/k8s.crt -subj "/CN=${DSSC_SUBJECTALTNAME}" -config ${WORKDIR}/req.conf
+
+
   printf '%s' "Creating secret with keys in Kubernetes...  "
   kubectl create secret tls k8s-certificate --cert=${WORKDIR}/k8s.crt --key=${WORKDIR}/k8s.key --dry-run=client -n ${DSSC_NAMESPACE} -o yaml | kubectl apply -f -
   
