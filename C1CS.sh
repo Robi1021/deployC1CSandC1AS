@@ -29,7 +29,7 @@ if [[ "`helm list -n ${DSSC_NAMESPACE} -o json | jq -r '.[].name'`" =~ 'deepsecu
       #existing DSSC found, but could not get a Bearertoken -> delete existing DSSC
       printf "%s" "Uninstalling existing (and broken) smartcheck... "
       helm delete deepsecurity-smartcheck -n ${DSSC_NAMESPACE}
-      printf '\n%s' "Waiting for SmartCheck pods to be deleted"
+      printf '%s\n' "Waiting for SmartCheck pods to be deleted"
       export NROFPODS=`kubectl get pods -A | grep -c smartcheck`
       while [[ "${NROFPODS}" -gt "0" ]];do
         sleep 5
@@ -79,7 +79,7 @@ EOF
 #
 ##
 ## Default value: (none)
-activationCode: '${DSSC_AC}'  
+#activationCode: '${DSSC_AC}'   #DSSC will get activated by C1CS
 #update 202111xx will change to deploying C1CSkey
 # C1CSSCANNERAPIKEY from https://container.REGION.cloudone.trendmicro.com/api/scanners
 #cloudOne:
@@ -148,7 +148,7 @@ EOF
     sleep 10
     printf "%s" "."
   done
-  [[ "${PLATFORM}" == "AZURE" ]] &&  export DSSC_HOST=${DSSC_HOST_RAW//./-}.nip.io
+  [[ "${PLATFORM}" == "AZURE" ]] ||  [[ "${PLATFORM}" == "GCP" ]]&&  export DSSC_HOST=${DSSC_HOST_RAW//./-}.nip.io
   [[ "${PLATFORM}" == "AWS" ]]  && export DSSC_HOST=${DSSC_HOST_RAW}
   [ ${VERBOSE} -eq 1 ] && printf "\n%s\n" "DSSC_HOST=${DSSC_HOST}"
   printf '\n%s' "Waiting for SmartCheck Service to come online:"
