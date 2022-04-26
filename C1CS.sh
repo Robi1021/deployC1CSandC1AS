@@ -333,6 +333,9 @@ cat << EOF > work/overrides.smartcheck.yml
 cloudOne:
      apiKey: ${C1APIKEYforSCANNERS}
      endpoint: ${C1CSENDPOINTFORHELM}
+scan: 
+  malwareScan: 
+    enabled: true
 EOF
 printf '%s\n' "Running Helm upgrade for SmartCheck"
 DUMMY=`helm upgrade \
