@@ -137,6 +137,10 @@ vulnerabilityScan:
   limits:
     cpu: 1000m
     memory: 3Gi
+images:
+  registry:
+    repository: registry
+    digest: sha256:eff8f510098b5b8ebc422dcf9ca051c35fcea62817df9bdc575af65cdbc96117
 EOF
       
   printf '%s' "Deploying SmartCheck Helm chart..."
