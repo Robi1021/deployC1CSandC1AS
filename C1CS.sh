@@ -292,6 +292,8 @@ if [[ "${C1CS_RUNTIME}" == "true" ]]; then
         endpoint: ${C1CSENDPOINTFORHELM}
         runtimeSecurity:
           enabled: true
+        vulnerabilityScanning:
+          enabled: true
 EOF
 else
     cat << EOF >work/overrides.addC1csToK8s.yml
